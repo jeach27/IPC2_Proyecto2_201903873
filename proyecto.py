@@ -1,16 +1,47 @@
 import tkinter
-from io import open 
-from tkinter import scrolledtext as st
-from tkinter import filedialog as FileDialog
+from tkinter import *
+from tkinter import filedialog 
 from tkinter import messagebox
-import os.path
 import sys
+from xml.dom import minidom
+import matriz
+import lista
 
+
+j = None
+archivo = None
+listaMatrices = lista.lista()
 
 def CargarArchivo():
-    archivo = FileDialog.askopenfilename( initialdir='.', title = "Abrir un fichero"  )
-    return archivo
-
+    j = filedialog.askopenfilename(title = 'Cargar Archivo', filetypes = (('xml files','*.xml'),('all files','*.')))
+    archivo = minidom.parse(j)
+    matrizz = archivo.getElementsByTagName('matriz')
+    for mat in matrizz:
+        nombre = mat.getElementsByTagName('nombre')[0]
+        filas = mat.getElementsByTagName('filas')[0]
+        columnas = mat.getElementsByTagName('columnas')[0]
+        imagen = mat.getElementsByTagName('imagen')[0]
+        name = nombre.firstChild.data
+        x = int(columnas.firstChild.data)
+        y = int(filas.firstChild.data)
+        img = imagen.firstChild.data
+        m = matriz.Matriz(x, y, name)
+        fil = 0
+        col = -1
+        for i in range(len(img)):
+            if img[i]=='-':
+                col += 1
+            if img[i] == '*':
+                col += 1
+                m.insertar(col, fil, '*')
+            if ord(img[i]) == 10:
+                if i != 0:
+                    if img[i-1] == '-' or img[i-1] == '*':
+                        fil += 1
+                        col = -1
+        #m.graficar()
+        listaMatrices.agregarF(m)
+   
 def Rotaciónhorizontal():
     pass
 
@@ -48,11 +79,14 @@ def diferenciaSimetrica():
     pass
 
 def generarReporte():
-    text = st.ScrolledText(ventana, width = 90, height = 32)
-    text.place(x = 30, y = 90)
+    Myframe = Frame(ventana)
+   
+    Myframe.config(width="300", height="320")
+    Myframe.pack()
+    Myframe.place(x=70,y=100)
 
-    console = st.ScrolledText(ventana, width = 54, height = 32, bg = "black", foreground = "white")
-    console.place (x = 820, y = 90)
+    Imagen=PhotoImage(file="grafo.jpg")
+    Label(ventana, image=Imagen).pack()
 
 def informacionEstudiante():
     messagebox.showinfo("Informacion Estudiante", "Joaquin Emmanuel Aldair Coromac Huezo \n 201903873 \n IPC2")

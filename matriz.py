@@ -141,7 +141,7 @@ class Matriz:
                         if auxC.derecha != None:
                             auxC = auxC.derecha
                     else:
-                        file.write('<td>'+'-'+'</td>\n')
+                        file.write('<td>'+' '+'</td>\n')
             file.write('</tr>\n')
             
             
@@ -152,10 +152,5 @@ class Matriz:
         os.system('dot -Tpng grafo.dot -o grafo.jpg')
         os.startfile('grafo.jpg')
 
-mat = Matriz(13, 4, 'Joaquin')
-mat.insertar(1, 1, '*')
-mat.insertar(2, 2, '*')
-mat.insertar(12, 3, '*')
-mat.graficar()
 
  
