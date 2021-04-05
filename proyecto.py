@@ -8,11 +8,32 @@ from xml.dom import minidom
 import matriz
 import lista
 
+import webbrowser
+import os
+from datetime import datetime
+
 
 j = None
 archivo = None
 listaMatrices = lista.lista()
 listaReporte = lista.lista()
+
+class Reporte:
+    def __init__(self,fecha,hora,nombre,filas,columnas,tipo):
+        self.fecha = fecha
+        self.hora = hora
+        self.nombre = nombre
+        self.filas = filas
+        self.columnas = columnas
+        self.tipo = tipo
+
+def obtenerFecha():
+    now = datetime.now()
+    return str(now.day) + '/' + str(now.month) + '/' + str(now.year)
+
+def obtenerHora():
+    now = datetime.now()
+    return str(now.hour) +':'+ str(now.minute) +':'+ str(now.second)
 
 def CargarArchivo():
     j = filedialog.askopenfilename(title = 'Cargar Archivo', filetypes = (('xml files','*.xml'),('all files','*.')))
@@ -43,6 +64,8 @@ def CargarArchivo():
                         col = -1
         #m.graficar()
         listaMatrices.agregarF(m)
+        reporte = Reporte(obtenerFecha(), obtenerHora(), nombre, filas, columnas, "ingresoArchivo")
+        listaReporte.agregarF(reporte)
     #listaMatrices.imprimir()
     combo.place(x=70,y=80)
     aux = listaMatrices.head
@@ -59,33 +82,41 @@ def CargarArchivo():
     combo1.current(0)
     
 def Rotaciónhorizontal():
-    matriz = combo.get()
+    
+    matr = combo.get()
     aux = listaMatrices.head
     while aux:
-        if matriz == aux.data.raiz.codigo:
+        if matr == aux.data.raiz.codigo:
             break
         else:
             aux = aux.next
+    listaReporte.agregarF(Reporte(obtenerFecha(), obtenerHora(), matr, aux.data.filas, aux.data.columnas, 'RotacionHorizontal'))
   
 def Rotaciónvertical():
-    matriz = combo.get()
+    matr = combo.get()
     aux = listaMatrices.head
     while aux:
-        if matriz == aux.data.raiz.codigo:
+        if matr == aux.data.raiz.codigo:
             break
         else:
             aux = aux.next
+    listaReporte.agregarF(Reporte(obtenerFecha(), obtenerHora(), matr, aux.data.filas, aux.data.columnas, 'RotacionVertical'))
 
 def Transpuestaimagen():
-    matriz = combo.get()
+    matr = combo.get()
     aux = listaMatrices.head
     while aux:
-        if matriz == aux.data.raiz.codigo:
+        if matr == aux.data.raiz.codigo:
             break
         else:
             aux = aux.next
+    listaReporte.agregarF(Reporte(obtenerFecha(), obtenerHora(), matr, aux.data.filas, aux.data.columnas, 'TranspuestaImagen'))
 
 def Limpiarzona():
+    x1 = int(input('Ingrese x inicial\n'))
+    y1 = int(input('Ingrese y inicial\n'))
+    x2 = int(input('Ingrese x final\n'))+1
+    y2 = int(input('Ingrese y final\n'))+1
     matr = combo.get()
     aux = listaMatrices.head
     while aux:
@@ -105,9 +136,17 @@ def Limpiarzona():
                     mat.insertar(j, i, auxC.codigo)
                     if auxC.derecha != None:
                         auxC = auxC.derecha
+    for i in range(x1,x2):
+        for j in range(y1,y2):
+            if mat.buscarNodo(i, j) != False:
+                mat.ReemplazarNodo(i, j, ' ')
     mat.graficar()
+    listaReporte.agregarF(Reporte(obtenerFecha(), obtenerHora(), matr, aux.data.filas, aux.data.columnas, 'LimpiarZona'))
 
 def Agregarlíneahorizontal():
+    x1 = int(input('Ingrese x inicial\n'))
+    y1 = int(input('Ingrese y inicial\n'))
+    xn = int(input('Ingrese longitud de linea\n'))
     matr = combo.get()
     aux = listaMatrices.head
     while aux:
@@ -127,9 +166,17 @@ def Agregarlíneahorizontal():
                     mat.insertar(j, i, auxC.codigo)
                     if auxC.derecha != None:
                         auxC = auxC.derecha
-    mat.graficar()
+    for i in range(xn):
+        if mat.buscarNodo(x1, y1) != True:
+            mat.insertar(x1, y1, '*')
+            x1 += 1
+    mat.graficar() 
+    listaReporte.agregarF(Reporte(obtenerFecha(), obtenerHora(), matr, aux.data.filas, aux.data.columnas, 'AgregarLineaHorizontal'))         
 
 def Agregarlíneavertical():
+    x1 = int(input('Ingrese x inicial\n'))
+    y1 = int(input('Ingrese y inicial\n'))
+    xn = int(input('Ingrese longitud de linea\n'))
     matr = combo.get()
     aux = listaMatrices.head
     while aux:
@@ -149,7 +196,12 @@ def Agregarlíneavertical():
                     mat.insertar(j, i, auxC.codigo)
                     if auxC.derecha != None:
                         auxC = auxC.derecha
-    mat.graficar()
+    for _ in range(xn):
+        if mat.buscarNodo(x1, y1) == False:
+            mat.insertar(x1, y1, '*')
+            y1 += 1
+    mat.graficar() 
+    listaReporte.agregarF(Reporte(obtenerFecha(), obtenerHora(), matr, aux.data.filas, aux.data.columnas, 'AgregarLineaVertical'))
 
 def Agregarrectángulo():
     matr = combo.get()
@@ -172,6 +224,7 @@ def Agregarrectángulo():
                     if auxC.derecha != None:
                         auxC = auxC.derecha
     mat.graficar()
+    listaReporte.agregarF(Reporte(obtenerFecha(), obtenerHora(), matr, aux.data.filas, aux.data.columnas, 'AgregarRectangulo'))
 
 def Agregartriángulo():
     matr = combo.get()
@@ -194,6 +247,7 @@ def Agregartriángulo():
                     if auxC.derecha != None:
                         auxC = auxC.derecha
     mat.graficar()
+    listaReporte.agregarF(Reporte(obtenerFecha(), obtenerHora(), matr, aux.data.filas, aux.data.columnas, 'AgregarTriangulo'))
 
 def union():
     pass
@@ -208,9 +262,54 @@ def diferenciaSimetrica():
     pass
 
 def generarReporte():
+    f = open('reporte.html','w')
+    f.write('<html>\n')
+    f.write('   <head>\n')
+    f.write(' <title>Tabla Errores Menu</title>\n')
+    f.write('<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>\n')
+    f.write('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">\n')
+    f.write('<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>\n')
+    f.write('<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">\n')
+    f.write('<script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>\n')
+    f.write('   </head>\n')
+    f.write('   <body>\n')
+    f.write('       <table class="table table-striped table-dark">\n')
+    f.write('       <thead>\n')
+    f.write('           <tr>\n')
+    f.write('               <th scope="col">No</th>\n')   
+    f.write('               <th scope="col">Fecha</th>\n')
+    f.write('               <th scope="col">Hora</th>\n')
+    f.write('               <th scope="col">Nombre</th>\n')
+    f.write('               <th scope="col">Filas</th>\n')
+    f.write('               <th scope="col">Columnas</th>\n')
+    f.write('               <th scope="col">Tipo</th>\n')
+    f.write('           </tr>\n')
+    f.write('       </thead>\n')
+    f.write('       <tbody>\n')
     
-    render = PhotoImage(file = 'grafo.gif')
-    mens = Label(ventana, image = render).place(x=90,y=90)
+    j = listaReporte.head
+    for e in range(listaReporte.size):
+
+        f.write('           <tr>\n')
+        f.write('               <th scope="row">'+str(e+1)+'</th>\n')
+        f.write('               <td>'+str(j.data.fecha)+'</td>\n')
+        f.write('               <td>'+str(j.data.hora)+'</td>\n')
+        f.write('               <td>'+str(j.data.nombre)+'</td>\n')
+        f.write('               <td>'+str(j.data.filas)+'</td>\n')
+        f.write('               <td>'+str(j.data.columnas)+'</td>\n')
+        f.write('               <td>'+str(j.data.tipo)+'</td>\n')
+        f.write('           </tr>\n')
+        if j.next != None:
+            j = j.next
+        
+    f.write('       </tbody>\n')
+    f.write('       </table>\n')
+    f.write('   </body>\n')
+    f.write('</html>\n')
+    
+    f.close()
+
+    webbrowser.open_new_tab('reporte.html')
 
 def informacionEstudiante():
     messagebox.showinfo("Informacion Estudiante", "Joaquin Emmanuel Aldair Coromac Huezo \n 201903873 \n IPC2")

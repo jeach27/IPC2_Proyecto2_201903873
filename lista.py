@@ -48,11 +48,3 @@ class lista:
             print(node.data.raiz.codigo)
             node = node.next
 
-class Reporte:
-    def __init__(self,fecha,hora,nombre,filas,columnas,tipo):
-        self.fecha = fecha
-        self.hora = hora
-        self.nombre = nombre
-        self.filas = filas
-        self.columnas = columnas
-        self.tipo = tipo
