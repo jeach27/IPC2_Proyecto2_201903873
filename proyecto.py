@@ -90,6 +90,17 @@ def Rotaciónhorizontal():
             break
         else:
             aux = aux.next
+    mat = matriz.Matriz(aux.data.columnas, aux.data.filas, aux.data.raiz.codigo)
+    for i in range(aux.data.filas):
+        auxC = aux.data.buscarFila(i)
+        if auxC.derecha != None:
+            auxC = auxC.derecha
+        for j in range(aux.data.columnas):
+            if aux.data.buscarNodo(j, i) == True:
+                    mat.insertar(j, aux.data.filas-i-1 , auxC.codigo)
+                    if auxC.derecha != None:
+                        auxC = auxC.derecha
+    mat.graficar()        
     listaReporte.agregarF(Reporte(obtenerFecha(), obtenerHora(), matr, aux.data.filas, aux.data.columnas, 'RotacionHorizontal'))
   
 def Rotaciónvertical():
@@ -100,6 +111,17 @@ def Rotaciónvertical():
             break
         else:
             aux = aux.next
+    mat = matriz.Matriz(aux.data.columnas, aux.data.filas, aux.data.raiz.codigo)
+    for i in range(aux.data.filas):
+        auxC = aux.data.buscarFila(i)
+        if auxC.derecha != None:
+            auxC = auxC.derecha
+        for j in range(aux.data.columnas):
+            if aux.data.buscarNodo(j, i) == True:
+                    mat.insertar(aux.data.columnas-j-1, i , auxC.codigo)
+                    if auxC.derecha != None:
+                        auxC = auxC.derecha
+    mat.graficar()
     listaReporte.agregarF(Reporte(obtenerFecha(), obtenerHora(), matr, aux.data.filas, aux.data.columnas, 'RotacionVertical'))
 
 def Transpuestaimagen():
@@ -110,6 +132,17 @@ def Transpuestaimagen():
             break
         else:
             aux = aux.next
+    mat = matriz.Matriz(aux.data.filas, aux.data.columnas, aux.data.raiz.codigo)
+    for i in range(aux.data.filas):
+        auxC = aux.data.buscarFila(i)
+        if auxC.derecha != None:
+            auxC = auxC.derecha
+        for j in range(aux.data.columnas):
+            if aux.data.buscarNodo(j, i) == True:
+                    mat.insertar(i, j , auxC.codigo)
+                    if auxC.derecha != None:
+                        auxC = auxC.derecha
+    mat.graficar()
     listaReporte.agregarF(Reporte(obtenerFecha(), obtenerHora(), matr, aux.data.filas, aux.data.columnas, 'TranspuestaImagen'))
 
 def Limpiarzona():
@@ -169,7 +202,7 @@ def Agregarlíneahorizontal():
     for i in range(xn):
         if mat.buscarNodo(x1, y1) != True:
             mat.insertar(x1, y1, '*')
-            x1 += 1
+        x1 += 1
     mat.graficar() 
     listaReporte.agregarF(Reporte(obtenerFecha(), obtenerHora(), matr, aux.data.filas, aux.data.columnas, 'AgregarLineaHorizontal'))         
 
@@ -199,11 +232,15 @@ def Agregarlíneavertical():
     for _ in range(xn):
         if mat.buscarNodo(x1, y1) == False:
             mat.insertar(x1, y1, '*')
-            y1 += 1
+        y1 += 1
     mat.graficar() 
     listaReporte.agregarF(Reporte(obtenerFecha(), obtenerHora(), matr, aux.data.filas, aux.data.columnas, 'AgregarLineaVertical'))
 
 def Agregarrectángulo():
+    x1 = int(input('Ingrese x inicial\n'))
+    y1 = int(input('Ingrese y inicial\n'))
+    f = int(input('Ingrese No. filas para rectangulo\n'))
+    c = int(input('Ingrese No. columnas para rectangulo\n'))
     matr = combo.get()
     aux = listaMatrices.head
     while aux:
@@ -223,10 +260,30 @@ def Agregarrectángulo():
                     mat.insertar(j, i, auxC.codigo)
                     if auxC.derecha != None:
                         auxC = auxC.derecha
+
+    for _ in range(f-1):
+        if mat.buscarNodo(x1, y1) == False:
+            mat.insertar(x1, y1, '*')
+        y1 += 1
+    for _ in range(c-1):
+        if mat.buscarNodo(x1, y1) == False:
+            mat.insertar(x1, y1, '*')
+        x1 += 1
+    for _ in range(f-1):
+        if mat.buscarNodo(x1, y1) == False:
+            mat.insertar(x1, y1, '*')
+        y1 -= 1
+    for _ in range(c-1):
+        if mat.buscarNodo(x1, y1) == False:
+            mat.insertar(x1, y1, '*')
+        x1 -= 1
     mat.graficar()
     listaReporte.agregarF(Reporte(obtenerFecha(), obtenerHora(), matr, aux.data.filas, aux.data.columnas, 'AgregarRectangulo'))
 
 def Agregartriángulo():
+    x1 = int(input('Ingrese x inicial\n'))
+    y1 = int(input('Ingrese y inicial\n'))
+    l = int(input('Ingrese longitud de catetos\n'))
     matr = combo.get()
     aux = listaMatrices.head
     while aux:
@@ -246,26 +303,231 @@ def Agregartriángulo():
                     mat.insertar(j, i, auxC.codigo)
                     if auxC.derecha != None:
                         auxC = auxC.derecha
+    for _ in range(l-1):
+        if mat.buscarNodo(x1, y1) == False:
+            mat.insertar(x1, y1, '*')
+        y1 += 1
+    for _ in range(l-1):
+        if mat.buscarNodo(x1, y1) == False:
+            mat.insertar(x1, y1, '*')
+        x1 += 1
+    for _ in range(l-1):
+        if mat.buscarNodo(x1, y1) == False:
+            mat.insertar(x1, y1, '*')
+        x1 -= 1
+        y1 -= 1
     mat.graficar()
     listaReporte.agregarF(Reporte(obtenerFecha(), obtenerHora(), matr, aux.data.filas, aux.data.columnas, 'AgregarTriangulo'))
 
 def union():
-    pass
+    matr = combo.get()
+    matr2 = combo1.get()
+    aux = listaMatrices.head
+    while aux:
+        if matr == aux.data.raiz.codigo:
+            break
+        else:
+            aux = aux.next
+    aux2 = listaMatrices.head
+    while aux2:
+        if matr2 == aux2.data.raiz.codigo:
+            break
+        else:
+            aux2 = aux2.next
+    filas1 = aux.data.filas
+    columnas1 = aux.data.columnas
+    filas2 = aux2.data.filas
+    columnas2 = aux2.data.columnas
+    filasF = 0
+    columnasF = 0
+    if filas1 >= filas2:
+        filasF = filas1
+    if filas1 <= filas2:
+        filasF = filas2
+    if columnas1 >= columnas2:
+        columnasF = columnas1
+    if columnas1 <= columnas2:
+        columnasF = columnas2
+    mat = matriz.Matriz(columnasF, filasF, 'RU')
+
+    for i in range(filas1):
+        auxC = aux.data.buscarFila(i)
+        if auxC != None:
+            if auxC.derecha!=None:
+                auxC = auxC.derecha
+            for j in range(columnas1):
+                if aux.data.buscarNodo(j, i) == True:
+                    mat.insertar(j, i, auxC.codigo)  
+                    if auxC.derecha != None:
+                        auxC = auxC.derecha 
+    for h in range(filas2):
+        auxC1 = aux2.data.buscarFila(h)
+        if auxC1 != None:
+            if auxC1.derecha!=None:
+                auxC1 = auxC1.derecha
+            for k in range(columnas2):
+                if aux2.data.buscarNodo(k, h) == True:
+                    if mat.buscarNodo(k, h) == False:
+                        mat.insertar(k, h, auxC1.codigo)  
+                    if auxC1.derecha != None:
+                        auxC1 = auxC1.derecha
+    mat.graficar()
+
+    listaReporte.agregarF(Reporte(obtenerFecha(),obtenerHora(),aux.data.raiz.codigo+' '+aux2.data.raiz.codigo,'No Aplica','No Aplica','Union'))
 
 def interseccion():
-    pass
+    matr = combo.get()
+    matr2 = combo1.get()
+    aux = listaMatrices.head
+    while aux:
+        if matr == aux.data.raiz.codigo:
+            break
+        else:
+            aux = aux.next
+    aux2 = listaMatrices.head
+    while aux2:
+        if matr2 == aux2.data.raiz.codigo:
+            break
+        else:
+            aux2 = aux2.next
+    filas1 = aux.data.filas
+    columnas1 = aux.data.columnas
+    filas2 = aux2.data.filas
+    columnas2 = aux2.data.columnas
+    filasF = 0
+    columnasF = 0
+    if filas1 >= filas2:
+        filasF = filas1
+    if filas1 <= filas2:
+        filasF = filas2
+    if columnas1 >= columnas2:
+        columnasF = columnas1
+    if columnas1 <= columnas2:
+        columnasF = columnas2
+    mat = matriz.Matriz(columnasF, filasF, 'RI')
+    for i in range(filas1):
+        auxC = aux.data.buscarFila(i)
+        if auxC != None:
+            if auxC.derecha!=None:
+                auxC = auxC.derecha
+            for j in range(columnas1):
+                if aux.data.buscarNodo(j, i) == True:
+                    if aux2.data.buscarNodo(j, i) == True:
+                        mat.insertar(j, i, auxC.codigo)
+                    if auxC.derecha != None:
+                        auxC = auxC.derecha 
+
+    for h in range(filas2):
+        auxC1 = aux2.data.buscarFila(h)
+        if auxC1 != None:
+            if auxC1.derecha!=None:
+                auxC1 = auxC1.derecha
+            for k in range(columnas2):
+                if aux2.data.buscarNodo(k, h) == True:
+                    if aux.data.buscarNodo(k, h) == True:
+                        if mat.buscarNodo(k, h) == False:
+                            mat.insertar(k, h, auxC1.codigo)  
+                    if auxC1.derecha != None:
+                        auxC1 = auxC1.derecha
+    
+    mat.graficar()
+    listaReporte.agregarF(Reporte(obtenerFecha(),obtenerHora(),aux.data.raiz.codigo+' '+aux2.data.raiz.codigo,'No Aplica','No Aplica','Interseccion'))
 
 def diferencia():
-    pass
+    matr = combo.get()
+    matr2 = combo1.get()
+    aux = listaMatrices.head
+    while aux:
+        if matr == aux.data.raiz.codigo:
+            break
+        else:
+            aux = aux.next
+    aux2 = listaMatrices.head
+    while aux2:
+        if matr2 == aux2.data.raiz.codigo:
+            break
+        else:
+            aux2 = aux2.next
+    filas1 = aux.data.filas
+    columnas1 = aux.data.columnas
+    mat = matriz.Matriz(columnas1, filas1, 'RD')
+    for i in range(filas1):
+        auxC = aux.data.buscarFila(i)
+        if auxC != None:
+            if auxC.derecha!=None:
+                auxC = auxC.derecha
+            for j in range(columnas1):
+                if aux.data.buscarNodo(j, i) == True:
+                    if aux2.data.buscarNodo(j, i) == False:
+                        mat.insertar(j, i, auxC.codigo)
+                    if auxC.derecha != None:
+                        auxC = auxC.derecha
+    mat.graficar()
+    listaReporte.agregarF(Reporte(obtenerFecha(),obtenerHora(),aux.data.raiz.codigo+' '+aux2.data.raiz.codigo,'No Aplica','No Aplica','Diferencia'))
 
 def diferenciaSimetrica():
-    pass
+    matr = combo.get()
+    matr2 = combo1.get()
+    aux = listaMatrices.head
+    while aux:
+        if matr == aux.data.raiz.codigo:
+            break
+        else:
+            aux = aux.next
+    aux2 = listaMatrices.head
+    while aux2:
+        if matr2 == aux2.data.raiz.codigo:
+            break
+        else:
+            aux2 = aux2.next
+    filas1 = aux.data.filas
+    columnas1 = aux.data.columnas
+    filas2 = aux2.data.filas
+    columnas2 = aux2.data.columnas
+    filasF = 0
+    columnasF = 0
+    if filas1 >= filas2:
+        filasF = filas1
+    if filas1 <= filas2:
+        filasF = filas2
+    if columnas1 >= columnas2:
+        columnasF = columnas1
+    if columnas1 <= columnas2:
+        columnasF = columnas2
+    mat = matriz.Matriz(columnasF, filasF, 'RDS')
+    for i in range(filas1):
+        auxC = aux.data.buscarFila(i)
+        if auxC != None:
+            if auxC.derecha!=None:
+                auxC = auxC.derecha
+            for j in range(columnas1):
+                if aux.data.buscarNodo(j, i) == True:
+                    if aux2.data.buscarNodo(j, i) == False:
+                        mat.insertar(j, i, auxC.codigo)
+                    if auxC.derecha != None:
+                        auxC = auxC.derecha 
+
+    for h in range(filas2):
+        auxC1 = aux2.data.buscarFila(h)
+        if auxC1 != None:
+            if auxC1.derecha!=None:
+                auxC1 = auxC1.derecha
+            for k in range(columnas2):
+                if aux2.data.buscarNodo(k, h) == True:
+                    if aux.data.buscarNodo(k, h) == False:
+                        if mat.buscarNodo(k, h) == False:
+                            mat.insertar(k, h, auxC1.codigo)  
+                    if auxC1.derecha != None:
+                        auxC1 = auxC1.derecha
+    
+    mat.graficar()
+    listaReporte.agregarF(Reporte(obtenerFecha(),obtenerHora(),aux.data.raiz.codigo+' '+aux2.data.raiz.codigo,'No Aplica','No Aplica','DiferenciaSimetrica'))
 
 def generarReporte():
     f = open('reporte.html','w')
     f.write('<html>\n')
     f.write('   <head>\n')
-    f.write(' <title>Tabla Errores Menu</title>\n')
+    f.write(' <title>Tabla Reporte</title>\n')
     f.write('<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>\n')
     f.write('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">\n')
     f.write('<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>\n')
@@ -312,7 +574,7 @@ def generarReporte():
     webbrowser.open_new_tab('reporte.html')
 
 def informacionEstudiante():
-    messagebox.showinfo("Informacion Estudiante", "Joaquin Emmanuel Aldair Coromac Huezo \n 201903873 \n IPC2")
+    messagebox.showinfo("Informacion Estudiante", ">Joaquin Emmanuel Aldair Coromac Huezo \n>201903873 \n>Introducion a la Programacion y Computacion 2\n>Ingenieria en Ciencias y Sistemas\n>5to Semestre")
 
 def Documentacion():
     pass

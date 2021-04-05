@@ -44,20 +44,20 @@ Foo [label=<
 <td>*</td>
 <td> </td>
 <td> </td>
-<td> </td>
 <td>*</td>
-<td> </td>
+<td>*</td>
+<td>*</td>
 </tr>
 <tr>
 <td>3</td>
 <td> </td>
 <td>*</td>
 <td> </td>
+<td>*</td>
 <td> </td>
+<td>*</td>
 <td> </td>
-<td> </td>
-<td> </td>
-<td> </td>
+<td>*</td>
 </tr>
 <tr>
 <td>4</td>
@@ -74,11 +74,11 @@ Foo [label=<
 <td>5</td>
 <td> </td>
 <td>*</td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
 <td>*</td>
-<td> </td>
-<td> </td>
-<td> </td>
-<td> </td>
 <td> </td>
 </tr>
 <tr>
@@ -86,9 +86,9 @@ Foo [label=<
 <td> </td>
 <td> </td>
 <td>*</td>
+<td>*</td>
 <td> </td>
-<td> </td>
-<td> </td>
+<td>*</td>
 <td> </td>
 <td>*</td>
 </tr>
@@ -96,8 +96,8 @@ Foo [label=<
 <td>7</td>
 <td> </td>
 <td>*</td>
-<td>*</td>
-<td>*</td>
+<td> </td>
+<td> </td>
 <td> </td>
 <td> </td>
 <td>*</td>
