@@ -12,12 +12,12 @@ class lista:
         return self.head == None
 
     def agregarF(self, data):
-        if not self.head:
+        if self.head == None:
             self.head = nodo(data=data)
             self.size += 1
             return
         curr = self.head
-        while curr.next:
+        while curr.next != None:
             curr = curr.next
         curr.next = nodo(data=data)
         self.size += 1
@@ -45,5 +45,14 @@ class lista:
     def imprimir( self ):
         node = self.head
         while node != None:
-            print(node.data, end =" => ")
+            print(node.data.raiz.codigo)
             node = node.next
+
+class Reporte:
+    def __init__(self,fecha,hora,nombre,filas,columnas,tipo):
+        self.fecha = fecha
+        self.hora = hora
+        self.nombre = nombre
+        self.filas = filas
+        self.columnas = columnas
+        self.tipo = tipo

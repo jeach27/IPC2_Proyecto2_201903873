@@ -149,8 +149,28 @@ class Matriz:
         
         file.write('}')
         file.close() 
-        os.system('dot -Tpng grafo.dot -o grafo.jpg')
-        os.startfile('grafo.jpg')
+        os.system('dot -Tgif grafo.dot -o grafo.gif')
+        os.startfile('grafo.gif')
 
+    def ReemplazarNodo(self, x, y, codigo):
+        auxC = Matriz.buscarColumna(self, x)
+        for i in range(self.filas+1):
+            if auxC.y == y:
+                auxC.codigo = codigo
+            else:
+                if auxC.abajo != None:
+                    auxC = auxC.abajo
 
- 
+    def buscarNodo(self, x, y):
+        auxC = Matriz.buscarColumna(self, x)
+        for i in range(self.filas+1):
+            if auxC.y == y:
+                return True
+            else:
+                if auxC.abajo != None:
+                    auxC = auxC.abajo
+        return False
+        
+'''mat = Matriz(10, 10, 'hola')
+mat.insertar(2, 2, 'hi')
+mat.graficar()'''   
