@@ -5,7 +5,7 @@ graph [pad="0.5", nodesep="0.5", ranksep="2"];
 Foo [label=< 
 <table border="0" cellborder="1" cellspacing="0">
 <tr>
-<td>Matriz_2</td>
+<td>RDS</td>
 <td>0</td>
 <td>1</td>
 <td>2</td>
@@ -29,34 +29,34 @@ Foo [label=<
 <tr>
 <td>1</td>
 <td> </td>
-<td>*</td>
 <td> </td>
-<td>*</td>
 <td> </td>
-<td>*</td>
 <td> </td>
-<td>*</td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
 </tr>
 <tr>
 <td>2</td>
 <td> </td>
 <td> </td>
-<td>*</td>
 <td> </td>
 <td> </td>
 <td> </td>
-<td>*</td>
+<td> </td>
+<td> </td>
 <td> </td>
 </tr>
 <tr>
 <td>3</td>
 <td> </td>
-<td>*</td>
-<td> </td>
-<td>*</td>
 <td> </td>
 <td> </td>
-<td>*</td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
 <td> </td>
 </tr>
 <tr>
@@ -73,34 +73,34 @@ Foo [label=<
 <tr>
 <td>5</td>
 <td> </td>
-<td>*</td>
-<td>*</td>
-<td>*</td>
 <td> </td>
 <td> </td>
-<td>*</td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
 <td> </td>
 </tr>
 <tr>
 <td>6</td>
 <td> </td>
 <td> </td>
-<td>*</td>
 <td> </td>
 <td> </td>
-<td>*</td>
 <td> </td>
-<td>*</td>
+<td> </td>
+<td> </td>
+<td> </td>
 </tr>
 <tr>
 <td>7</td>
 <td> </td>
-<td>*</td>
-<td>*</td>
-<td>*</td>
 <td> </td>
 <td> </td>
-<td>*</td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
 <td> </td>
 </tr>
 </table>>];

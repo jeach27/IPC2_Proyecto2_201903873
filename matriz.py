@@ -124,6 +124,36 @@ class Matriz:
 
     def graficar(self):
 
+        file = open('grafoR.dot','w')
+        file.write('digraph G{\n')
+
+        file.write('graph [pad="0.5", nodesep="0.5", ranksep="2"];\n  node [shape=plain]\n  rankdir=LR; \nFoo [label=< \n<table border="0" cellborder="1" cellspacing="0">\n')
+        
+        
+        
+        for i in range(-1,self.filas):
+            file.write('<tr>\n')
+            auxC = Matriz.buscarFila(self, i)
+            if auxC != None:
+                for j in range(-1,self.columnas):
+                    if auxC.x == j and auxC.y == i:
+                        file.write('<td>'+auxC.codigo+'</td>\n')
+                        if auxC.derecha != None:
+                            auxC = auxC.derecha
+                    else:
+                        file.write('<td>'+' '+'</td>\n')
+            file.write('</tr>\n')
+            
+            
+        file.write('</table>>];\n')
+        
+        file.write('}')
+        file.close() 
+        os.system('dot -Tpng grafoR.dot -o grafoR.png')
+        os.startfile('grafoR.png')
+
+    def graficar1(self):
+
         file = open('grafo.dot','w')
         file.write('digraph G{\n')
 
@@ -149,8 +179,38 @@ class Matriz:
         
         file.write('}')
         file.close() 
-        os.system('dot -Tgif grafo.dot -o grafo.gif')
-        os.startfile('grafo.gif')
+        os.system('dot -Tpng grafo.dot -o grafo.png')
+        os.startfile('grafo.png')
+
+    def graficar2(self):
+
+        file = open('grafo1.dot','w')
+        file.write('digraph G{\n')
+
+        file.write('graph [pad="0.5", nodesep="0.5", ranksep="2"];\n  node [shape=plain]\n  rankdir=LR; \nFoo [label=< \n<table border="0" cellborder="1" cellspacing="0">\n')
+        
+        
+        
+        for i in range(-1,self.filas):
+            file.write('<tr>\n')
+            auxC = Matriz.buscarFila(self, i)
+            if auxC != None:
+                for j in range(-1,self.columnas):
+                    if auxC.x == j and auxC.y == i:
+                        file.write('<td>'+auxC.codigo+'</td>\n')
+                        if auxC.derecha != None:
+                            auxC = auxC.derecha
+                    else:
+                        file.write('<td>'+' '+'</td>\n')
+            file.write('</tr>\n')
+            
+            
+        file.write('</table>>];\n')
+        
+        file.write('}')
+        file.close() 
+        os.system('dot -Tpng grafo1.dot -o grafo1.png')
+        os.startfile('grafo1.png')     
 
     def ReemplazarNodo(self, x, y, codigo):
         auxC = Matriz.buscarColumna(self, x)
